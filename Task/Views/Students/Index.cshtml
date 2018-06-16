@@ -33,7 +33,9 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            if (!item.IsDeleted)
+            {
+                <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -53,6 +55,7 @@
                     @Html.ActionLink("Enroll", "Enroll", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
                 </td>
             </tr>
+            }
         }
     </tbody>
 </table>
