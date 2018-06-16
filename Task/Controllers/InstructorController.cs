@@ -69,9 +69,10 @@ namespace Task.Controllers
             return View(instructor);
         }
 
-        [HttpPost]
-        public ActionResult Delete(Instructor instructor)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
+            Instructor instructor = Unit.InstructorManager.GetById(id);
             instructor.IsDeleted = true;
             Unit.InstructorManager.Delete(instructor.Id);
             return RedirectToAction("Index");
