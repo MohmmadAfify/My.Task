@@ -21,7 +21,6 @@ namespace Task.Controllers
         public ActionResult Index()
         {
             List<Student> students = unit.StudentManager.GetAllBind();
-
             return View(students);
         }
 
@@ -44,7 +43,6 @@ namespace Task.Controllers
                 unit.StudentManager.Add(student);
                 return RedirectToAction("Index");
             }
-
             return View(student);
         }
 
@@ -97,32 +95,14 @@ namespace Task.Controllers
                 Courses = new List<Course>(),
                 StudentName = student.Name,
                 StudentId = student.Id,
-                CourseId = 0,
-                InstructorId = 0                
             };
+
             studentCourseVM.Courses = courses;
-
-            #region Past Code
-            //StudentCourseVM studentCourseVM = new StudentCourseVM
-            //{
-            //    StudentId = student.Id,
-            //    StudentName = student.Name,
-            //    Courses = new SelectList(items: courses,
-            //                             dataValueField: "Id",
-            //                             dataTextField: "Name",
-            //                             selectedValue: courses),
-            //    FilteredInstructors = new SelectList(items: instructors,
-            //                                 dataValueField: "Id",
-            //                                 dataTextField: "Name",
-            //                                 selectedValue: instructors)
-            //}; 
-            #endregion
-
             return View(studentCourseVM);
         }
 
         [HttpPost, ActionName("Enroll")]
-        public ActionResult EnrollCompleted(/*StudentCourseVM studentCourseVM*/ int courseId)
+        public ActionResult EnrollCompleted(int courseId)
         {
             List<Instructor> instructors = unit.InstructorManager.GetAllBind();
             instructors = ctx.InstructorCourses.Where(a => a.Fk_CourseID == courseId).Select(i => i.Instructor).ToList();
@@ -130,60 +110,19 @@ namespace Task.Controllers
             SelectList instructorsList = new SelectList(instructors, "Id", "Name", "");
             TempData["courseId"] = courseId;
             return Json(instructorsList);
-
-            #region worked
-            //List<Instructor> instructors = unit.InstructorManager.GetAllBind();
-            //instructors = ctx.InstructorCourses.Where(a => a.Fk_CourseID == courseId).Select(i => i.Instructor).ToList();
-            //SelectList instructorsList = new SelectList(instructors, "Id", "Name", "");
-
-            #endregion
         }
 
         [HttpPost]
-        public ActionResult AssignCourse(int StudentId, int ddlInstructor)
+        public ActionResult AssignCourse(int StudentId, int instructorID)
         {
-            int courseId = Convert.ToInt32(TempData["courseId"]);
             #region Logic Here
             /*  Get the instuctorId, StudentId, CourseId
                     *  assign the instuctorId, StudentId in instructorstudent entity
                     *  assign the StudentId, CourseId in studentcourse entity
                     */
             #endregion
-            #region MyRegion
-            // StudentCourseVM studentCourseVM = new StudentCourseVM();
-            //{
-            //    InstructorStudent = ctx.InstructorStudents.FirstOrDefault(),
-            //    StudentCourse = ctx.StudentCourses.FirstOrDefault()
-            //};
-            //var instructorstudent = studentCourseVM.InstructorStudent;
-            //instructorstudent.Fk_StudentId = 0;
-            //instructorstudent.Fk_InstructorId = 0;
 
-            //instructorstudent.Fk_StudentId = StudentId;
-            //instructorstudent.Fk_InstructorId = StudentId;
-
-            //var studentcourse = studentCourseVM.StudentCourse;
-            //studentcourse.Fk_CourseId = courseId;
-            //studentcourse.Fk_StudentId = StudentId;
-            //studentcourse.FirstOrDefault().Fk_CourseId = courseId;
-            //studentcourse.FirstOrDefault().Fk_StudentId = StudentId;
-            //ctx.StudentCourses.Add(studentcourse.FirstOrDefault());
-
-            //instructorstudent.FirstOrDefault().Fk_InstructorId = ddlInstructor;
-            //instructorstudent.FirstOrDefault().Fk_StudentId = StudentId;
-            //ctx.InstructorStudents.Add(instructorstudent.FirstOrDefault());
-
-            //var studentcourse = studentCourseVM.StudentCourse;
-            //var instructorstudent = studentCourseVM.InstructorStudent;
-
-            //studentcourse.Fk_CourseId = courseId;
-            //studentcourse.Fk_StudentId = StudentId;
-            //ctx.StudentCourses.Add(studentcourse);
-
-            //instructorstudent.Fk_InstructorId = ddlInstructor;
-            //instructorstudent.Fk_StudentId = StudentId;
-            //ctx.InstructorStudents.Add(instructorstudent);
-            #endregion
+            int courseId = Convert.ToInt32(TempData["courseId"]);
 
             StudentCourse studentCourse = new StudentCourse
             {
@@ -194,13 +133,12 @@ namespace Task.Controllers
 
             InstructorStudent instructorStudent = new InstructorStudent
             {
-                Fk_InstructorId = ddlInstructor,
+                Fk_InstructorId = instructorID,
                 Fk_StudentId = StudentId
             };
             ctx.InstructorStudents.Add(instructorStudent);
 
             ctx.SaveChanges();
-
             return RedirectToAction("Index");
         }
     }

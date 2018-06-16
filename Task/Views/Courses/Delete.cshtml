@@ -42,8 +42,8 @@
             if (Model.HasInstructor == false)
             {
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> |
-                    @Html.ActionLink("Back to List", "Index","Index", new { @class= "btn btn-default btn-sm" })
+                    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" }) |
+                    <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
                 </div>
             }
             else

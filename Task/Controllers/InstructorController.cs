@@ -11,18 +11,13 @@ namespace Task.Controllers
 {
     public class InstructorController : Controller
     {
-        UnitOfWork Unit = new UnitOfWork();
+        UnitOfWork unit = new UnitOfWork();
         private TaskModel ctx = new TaskModel();
 
         public ActionResult Index()
         {
-            var instructors = Unit.InstructorManager.GetAllBind();
+            var instructors = unit.InstructorManager.GetAllBind();
             return View(instructors);
-        }
-
-        public ActionResult Detail(int id)
-        {
-            return View();
         }
 
         public ActionResult Create()
@@ -35,7 +30,7 @@ namespace Task.Controllers
         {
             if (ModelState.IsValid)
             {
-                Unit.InstructorManager.Add(instructor);
+                unit.InstructorManager.Add(instructor);
                 return RedirectToAction("Index");
             }
             return View(instructor);
@@ -43,7 +38,7 @@ namespace Task.Controllers
 
         public ActionResult Edit(int id)
         {
-            Instructor instructor = Unit.InstructorManager.GetById(id);
+            Instructor instructor = unit.InstructorManager.GetById(id);
             return View(instructor);
         }
 
@@ -57,7 +52,7 @@ namespace Task.Controllers
                 old.Department = instructor.Department;
                 old.Mail = instructor.Mail;
                 old.Phone = instructor.Phone;
-                Unit.InstructorManager.Edit(instructor);
+                unit.InstructorManager.Edit(instructor);
                 return RedirectToAction("Index");
             };
             return View();
@@ -65,16 +60,16 @@ namespace Task.Controllers
 
         public ActionResult Delete(int id)
         {
-            Instructor instructor = Unit.InstructorManager.GetById(id);
+            Instructor instructor = unit.InstructorManager.GetById(id);
             return View(instructor);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Instructor instructor = Unit.InstructorManager.GetById(id);
+            Instructor instructor = unit.InstructorManager.GetById(id);
             instructor.IsDeleted = true;
-            Unit.InstructorManager.Delete(instructor.Id);
+            unit.InstructorManager.Delete(instructor.Id);
             return RedirectToAction("Index");
         }
     }

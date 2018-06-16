@@ -21,29 +21,8 @@ namespace Task.Controllers
         {
             #region Logic Here
             /* Get all the courses without binding to InstructorCourse
-             * In Delete we'll check if the course is binded to any instructors
-
-            Hint : Try to make DDL of instructors page*/
-            #endregion
-
-            #region Past Logic
-            // var courses = Unit.CourseManager.GetAll().ToList();
-            //var courses = ctx.Courses.ToList();
-            //var courseVM = new List<CourseInstructorVM>();
-            //var instructors = ctx.Instructors.ToList();
-
-            //foreach (var item in courses)
-            //{
-            //    courseVM.Add(new CourseInstructorVM ()
-            //    {
-            //        Id = item.Id,
-            //        CourseName = item.Name,
-            //        Code = item.Course.Code,
-            //        Hours = item.Course.Hours ?? 20,
-            //        //InstructorName = item.Instructor.Name
-            //        Instructors = new SelectList(items: instructors, dataValueField: item.Instructor.Id.ToString() ,dataTextField: item.Instructor.Name.ToString(), selectedValue: item.Instructor.Name)
-            //    });
-            //}
+                    * In Delete we'll check if the course is binded to any instructors
+                    */
             #endregion
             var courses = unit.CourseManager.GetAllBind();
             return View(courses);
@@ -66,11 +45,11 @@ namespace Task.Controllers
 
             CourseInstructorVM courseVM = new CourseInstructorVM
             {
-                Id = course.Id,
+                CourseId = course.Id,
                 CourseName = course.Name,
-                Code = course.Code,
-                Hours = course.Hours ?? 20,
-                HasInstructor = course.HasInstructor,
+                CourseCode = course.Code,
+                CourseHours = course.Hours ?? 20,
+                CourseHasInstructor = course.HasInstructor,
                 Instructors = new SelectList(items: instructors,
                                                 dataValueField: "Name",
                                                 dataTextField: "Name", 
@@ -88,34 +67,17 @@ namespace Task.Controllers
         [HttpPost]
         public ActionResult Create(Course course)
         {
-
             if (ModelState.IsValid)
             {
-                #region Past Logic
-                //var courseVM = new List<CourseInstructorVM>();
-                //courseVM.Add(new CourseInstructorVM
-                //{
-                //    Code = course.Code,
-                //    CourseName = course.Name,
-                //    Hours = course.Hours ?? 20,
-                //    InstructorName = instructor.Name
-                //});
-                //ctx.InstructorCourses.AddRange(courseVM);
-                //ctx.Courses.Add(course);
-                //ctx.SaveChanges();
-                #endregion
-                // solve the damn problem
                 unit.CourseManager.Add(course);
                 return RedirectToAction("Index");
             }
-
             return View(course);
         }
 
         public ActionResult Edit(int id)
         {
             Course course = unit.CourseManager.GetById(id);
-                //ctx.Courses.FirstOrDefault(a => a.Id == id);
             return View(course);
         }
 
@@ -159,7 +121,7 @@ namespace Task.Controllers
 
             CourseInstructorVM courseVM = new CourseInstructorVM
             {
-                Id = course.Id,
+                CourseId = course.Id,
                 CourseName = course.Name,
                 Instructors = new SelectList(items: instructors,
                                              dataValueField: "Id",
@@ -170,21 +132,22 @@ namespace Task.Controllers
         }
 
         [HttpPost , ActionName("Assign")]
-        public ActionResult AssignCourse(CourseInstructorVM courseInstructorVM)
+        public ActionResult AssignCourseToInstructor(CourseInstructorVM courseInstructorVM)
         {
-            
-            var course = ctx.Courses.FirstOrDefault(c => c.Id == courseInstructorVM.Id);
-            var instructor = ctx.Instructors.FirstOrDefault(c => c.Id == courseInstructorVM.Instructor.Id);
-            var viewModel = courseInstructorVM.InstructorCourse;
+            // get entities
+            var course = ctx.Courses.FirstOrDefault(c => c.Id == courseInstructorVM.CourseId);
+            var instructor = ctx.Instructors.FirstOrDefault(c => c.Id == courseInstructorVM.InstructorId);
+            var InstructorCourse = courseInstructorVM.InstructorCourse;
 
             // Make them equal to Zero because it always sent as "NULL"
-            viewModel.Fk_CourseID = 0;
-            viewModel.Fk_InstructorId = 0;
+            InstructorCourse.Fk_CourseID = 0;
+            InstructorCourse.Fk_InstructorId = 0;
 
             course.HasInstructor = true;
-            viewModel.Fk_InstructorId = instructor.Id;
-            viewModel.Fk_CourseID = course.Id;
-            ctx.InstructorCourses.Add(viewModel);
+            InstructorCourse.Fk_InstructorId = instructor.Id;
+            InstructorCourse.Fk_CourseID = course.Id;
+
+            ctx.InstructorCourses.Add(InstructorCourse);
             ctx.SaveChanges();
 
             return RedirectToAction("Index");

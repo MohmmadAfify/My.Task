@@ -12,19 +12,19 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.Mail)
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.BirthDate)
             </th>
-            <th>
+            <th class="col-md-1">
                 @Html.DisplayNameFor(model => model.Phone)
             </th>
-            <th>
+            <th class="col-md-4">
                 Actions
             </th>
         </tr>
@@ -54,7 +54,7 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" }) |
                     @Html.ActionLink("Enroll", "Enroll", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
                 </td>
-            </tr>
+                </tr>
             }
         }
     </tbody>

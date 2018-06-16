@@ -12,10 +12,10 @@
     <table class="table table-striped">
         <tr>
             <td class="col-md-2">
-                @Html.LabelFor(model => model.Code)
+                @Html.LabelFor(model => model.CourseCode)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(model => model.Code)
+                @Html.DisplayFor(model => model.CourseCode)
             </td>
         </tr>
         <tr>
@@ -28,17 +28,13 @@
         </tr>
         <tr>
             <td class="col-md-2">
-                @Html.LabelFor(model => model.Hours)
+                @Html.LabelFor(model => model.CourseHours)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(model => model.Hours)
+                @Html.DisplayFor(model => model.CourseHours)
             </td>
         </tr>
-        @{ var instructors = Model.Instructors.ToList(); 
-                //Course.InstructorCourses.Select(a=>a.Instructor);
-                //.Select(a=>a.Instructor.Name).FirstOrDefault(); 
-            }
-        @if (instructors.Any())
+        @if (Model.CourseHasInstructor)
         {
             @:<tr>
                 <td class="col-md-2">
@@ -61,13 +57,13 @@
                     @Html.LabelFor(model => model.Instructors)
                 </td>
                 <td class="col-md-3">
-                    No instructors yet
+                    No instructors yet...
                     </td>
                 @:</tr>
         }
     </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary btn-sm" }) |
-    @Html.ActionLink("Back to List", "Index","Index", new { @class = "btn btn-default btn-sm" })
+    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }, new { @class = "btn btn-primary btn-sm" })
 </p>

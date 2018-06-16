@@ -7,8 +7,8 @@
 
 <script language="javascript" type="text/javascript">
     function GetInstructor(_courseId) {
-        var procemessage = "<option value='0'> Please wait...</option>";
-        $("#ddlInstructor").html(procemessage).show();
+        var html = "<option value='0'> Please wait...</option>";
+        $("#instructorId").html(html).show();
         var url = '@Url.Action("Enroll", "Students")';
         $.ajax({
             url: url,
@@ -23,20 +23,19 @@
                 for (var x = 0; x < data.length; x++) {
                     markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-                $("#ddlInstructor").html(markup).show();
+                $("#instructorId").html(markup).show();
                  
             },
             error: function (response) {
                 alert("error : " + response);
             }
         });
-        $(document).ready(function () {
-            $('#ddlInstructor').on('change', function () {
-                var selectedValue = $(this).val();
-                console.log(selectedValue);
-                //$('#IdForYourLink').prop('href', '/url/to/next/' + selectedValue);
-            });
-        });
+        //$(document).ready(function () {
+        //    $('#instructorId').on('change', function () {
+        //        var selectedValue = $(this).val();
+        //        console.log(selectedValue);
+        //    });
+        //});
     }
 </script>
 
@@ -53,9 +52,7 @@
         <div class="form-group">
             <label class="col-md-2"> Student Name</label>
             <div>
-                @Html.DisplayFor(a => a.StudentName,
-                      new { htmlAttributes = new { @class = "form-control" } })
-                
+                @Html.DisplayFor(a => a.StudentName,new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         <div class="form-group">
@@ -73,14 +70,12 @@
                 <br />
                 <br />
                 <label class="col-md-2">Instructors</label>
-                <select id="ddlInstructor" name="ddlInstructor" style="width: 200px" 
+                <select id="instructorId" name="instructorId" style="width: 200px" 
                         class ="dropdown col-md-5 btn btn-default">
                 </select>
             </div>
         </div>
         <p>
-            
-            @{ }
             @Html.HiddenFor(a => Model.StudentId)
             @Html.HiddenFor(a => Model.StudentName)
         </p>
@@ -91,10 +86,9 @@
         </div>
     </div>
 }
-            <div>
-                @Html.ActionLink("Back to List", "Index", "Index",
-                    new { @class = "btn btn-default btn-sm" })
-            </div>
+<div>
+    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" })
+</div>
 
 
 
