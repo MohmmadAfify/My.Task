@@ -18,13 +18,18 @@ namespace Task.Models.Entities
 
         public int Id { get; set; }
 
+        [Required]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Code must be numeric")]
         public int Code { get; set; }
 
         [Required]
         [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string Name { get; set; }
 
-        [Column("Hours")]
+        [Column("Hours") ]
+        [Range(1,40,ErrorMessage ="40 Hrs Max")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Hours must be numeric")]
         public int? Hours { get; set; }
 
         public Boolean HasInstructor { get; set; }

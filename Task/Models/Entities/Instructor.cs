@@ -20,14 +20,17 @@ namespace Task.Models.Entities
 
         [Required]
         [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string Name { get; set; }
 
-        [StringLength(100)]
+        [StringLength(100), EmailAddress]
         public string Mail { get; set; }
 
         [StringLength(50)]
         public string Department { get; set; }
 
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public int? Phone { get; set; }
 
         public bool IsDeleted { get; set; }

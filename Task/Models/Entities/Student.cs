@@ -20,15 +20,18 @@ namespace Task.Models.Entities
 
         [Required]
         [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string Name { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50), EmailAddress]
         public string Mail { get; set; }
 
         [Column(TypeName = "date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? BirthDate { get; set; }
 
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public int? Phone { get; set; }
 
         public bool IsDeleted { get; set; }
