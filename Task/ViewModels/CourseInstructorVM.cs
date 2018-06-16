@@ -9,15 +9,16 @@ namespace Task.ViewModels
 {
     public class CourseInstructorVM
     {
-        public Course Course { get; set; }
-        public Instructor Instructor { get; set; }
         public InstructorCourse InstructorCourse { get; set; }
 
-        public int Id { get; set; }
-        public int Code { get; set; }
+        public int CourseId { get; set; }
+        public int CourseCode { get; set; }
         public string CourseName { get; set; }
-        public int Hours { get; set; }
+        public int CourseHours { get; set; }
         public string InstructorName { get; set; }
+        public bool CourseHasInstructor { get; set; }
+        public bool CourseIsDeleted { get; set; }
+        public int InstructorId { get; set; }
 
         public SelectList Instructors { get; set; }
     }
