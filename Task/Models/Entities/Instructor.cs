@@ -30,6 +30,8 @@ namespace Task.Models.Entities
 
         public int? Phone { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstructorCourse> InstructorCourses { get; set; }
 
