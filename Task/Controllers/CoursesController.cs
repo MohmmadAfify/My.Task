@@ -127,13 +127,13 @@ namespace Task.Controllers
         {
             if (ModelState.IsValid)
             {
-                Course old = Unit.CourseManager.GetById(course.Id);
-                //ctx.Courses.FirstOrDefault(a => a.Id == course.Id);
+                Course old = ctx.Courses.FirstOrDefault(a => a.Id == course.Id);
+                // Unit.CourseManager.GetById(course.Id);
                 course.HasInstructor = old.HasInstructor;
                 old.Name = course.Name;
                 old.Hours = course.Hours;
                 old.Code = course.Code;
-                Unit.CourseManager.Edit(course.Id);
+                Unit.CourseManager.Edit(course);
                 return RedirectToAction("Index");
             }
             return View(course);

@@ -34,9 +34,8 @@ namespace Repository
             return context.SaveChanges() > 0;
         }
 
-        public bool Edit(int id)
+        public bool Edit(TEntity entity)
         {
-            var entity = set.Find(id);
             set.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
             return context.SaveChanges() > 0;
