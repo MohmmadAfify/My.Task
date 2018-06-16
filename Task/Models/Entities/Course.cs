@@ -24,7 +24,7 @@ namespace Task.Models.Entities
 
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Use letters only please")]
         public string Name { get; set; }
 
         [Column("Hours") ]

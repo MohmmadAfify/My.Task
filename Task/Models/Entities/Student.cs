@@ -20,7 +20,7 @@ namespace Task.Models.Entities
 
         [Required]
         [StringLength(100)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Use letters only please")]
         public string Name { get; set; }
 
         [StringLength(50), EmailAddress]
@@ -30,8 +30,7 @@ namespace Task.Models.Entities
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? BirthDate { get; set; }
 
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Must be numeric")]
         public int? Phone { get; set; }
 
         public bool IsDeleted { get; set; }
