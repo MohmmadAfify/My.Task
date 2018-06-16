@@ -1,4 +1,4 @@
-﻿@model InstructorCourse
+﻿@model Course
 
 @{
     ViewBag.Title = "Create Course";
@@ -14,24 +14,24 @@
         <h4>Course</h4>
         <hr />
         <div class="row form-group">
-            @Html.LabelFor(c => c.Course.Code, "Code", new { @class = "col-md-3" })
+            @Html.LabelFor(c => c.Code, "Code", new { @class = "col-md-3" })
             <div>
-                @Html.TextBoxFor(c => c.Course.Code, new { @class = "form-control col-md-9" })
-                @Html.ValidationMessageFor(c => c.Course.Code, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(c => c.Code, new { @class = "form-control col-md-9" })
+                @Html.ValidationMessageFor(c => c.Code, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row form-group">
-            @Html.LabelFor(c => c.Course.Name, "Name", new { @class = "col-md-3" })
+            @Html.LabelFor(c => c.Name, "Name", new { @class = "col-md-3" })
             <div>
-                @Html.TextBoxFor(c => c.Course.Name, new { @class = "form-control col-md-9" })
-                @Html.ValidationMessageFor(c => c.Course.Name, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control col-md-9" })
+                @Html.ValidationMessageFor(c => c.Name, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row form-group">
-            @Html.LabelFor(c => c.Course.Hours, "Hours", new { @class = "col-md-3" })
+            @Html.LabelFor(c => c.Hours, "Hours", new { @class = "col-md-3" })
             <div>
-                @Html.TextBoxFor(c => c.Course.Hours, new { @class = "form-control col-md-9" })
-                @Html.ValidationMessageFor(c => c.Course.Hours, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(c => c.Hours, new { @class = "form-control col-md-9" })
+                @Html.ValidationMessageFor(c => c.Hours, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -42,4 +42,8 @@
         @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" })
     </div>
 
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

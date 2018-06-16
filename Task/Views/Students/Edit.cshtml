@@ -1,4 +1,4 @@
-﻿@model Task.Models.Entities.Student
+﻿@model Student
 
 @{
     ViewBag.Title = "Edit Student";
@@ -57,3 +57,6 @@
     @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" })
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
