@@ -1,0 +1,102 @@
+﻿@model StudentCourseVM
+
+@{
+    ViewBag.Title = "Enroll";
+}
+
+
+<script language="javascript" type="text/javascript">
+    function GetInstructor(_courseId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#ddlInstructor").html(procemessage).show();
+        var url = '@Url.Action("Enroll", "Students")';
+        $.ajax({
+            url: url,
+            data: {
+                courseId: _courseId,
+            },
+            cache: false,
+            dataType: 'json',
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>--Select Instructor--</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlInstructor").html(markup).show();
+                 
+            },
+            error: function (response) {
+                alert("error : " + response);
+            }
+        });
+        $(document).ready(function () {
+            $('#ddlInstructor').on('change', function () {
+                var selectedValue = $(this).val();
+                console.log(selectedValue);
+                //$('#IdForYourLink').prop('href', '/url/to/next/' + selectedValue);
+            });
+        });
+    }
+</script>
+
+
+
+<h2>Enroll</h2>
+
+@using (Html.BeginForm("AssignCourse", "Students", "POST"))
+{
+    <div class="form-horizontal">
+        <h4>Course</h4>
+        <hr />
+       
+        <div class="form-group">
+            <label class="col-md-2"> Student Name</label>
+            <div>
+                @Html.DisplayFor(a => a.StudentName,
+                      new { htmlAttributes = new { @class = "form-control" } })
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2">Courses</label>
+            <div>
+                @Html.DropDownListFor(m => m.Courses,
+                                new SelectList(Model.Courses, "Id", "Name"),
+                                 "--Select Course--",
+                                new
+                                {
+                                    @style = "width:200px;",
+                                    @onchange = "javascript:GetInstructor(this.value);",
+                                    @class = "dropdown col-md-5 btn btn-default"
+                                })
+                <br />
+                <br />
+                <label class="col-md-2">Instructors</label>
+                <select id="ddlInstructor" name="ddlInstructor" style="width: 200px" 
+                        class ="dropdown col-md-5 btn btn-default">
+                </select>
+            </div>
+        </div>
+        <p>
+            
+            @{ }
+            @Html.HiddenFor(a => Model.StudentId)
+            @Html.HiddenFor(a => Model.StudentName)
+        </p>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}
+            <div>
+                @Html.ActionLink("Back to List", "Index", "Index",
+                    new { @class = "btn btn-default btn-sm" })
+            </div>
+
+
+
+
+

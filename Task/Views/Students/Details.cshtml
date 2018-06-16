@@ -1,0 +1,78 @@
+﻿@model Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+
+    <table class="table table-striped">
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Name)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Mail)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Mail)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.BirthDate)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.BirthDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Phone)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Phone)
+            </td>
+        </tr>
+           @{var courses = Model.StudentCourses.Select(a => a.Course).FirstOrDefault(); }
+        
+            @if (courses != null){
+            @:<tr>
+                <td class="col-md-2">
+                    @Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)
+                </td>
+                <td class="col-md-3">
+                    @Html.DropDownListFor(model => model.StudentCourses.FirstOrDefault().Course,
+                            new SelectList(Model.StudentCourses.Select(a=>a.Course) ,"Id","Name",
+                                            Model.StudentCourses.FirstOrDefault().Course.Name),
+                                            new { @class = "dropdown col-md-5 btn btn-default" })
+                </td>
+            @:</tr>
+            }
+            else
+            {
+                @:<tr>
+                    <td class="col-md-2">
+                        @Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)
+                    </td>
+                    <td>
+                        No Courses yet..
+                    </td>
+                    @:</tr>
+            }
+
+</table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id } , new { @class="btn btn-primary btn-sm" }) |
+    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" })
+</p>

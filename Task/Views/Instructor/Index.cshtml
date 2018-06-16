@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Instructor>
+
+@{
+    ViewBag.Title = "Instructors List";
+}
+
+<h2>Instructors List</h2>
+
+<p>
+    @Html.ActionLink("Add New Instructor", "Create","Create", new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Mail
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Phones
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                    @*@Html.DropDownListFor(a => item.InstructorPhones.FirstOrDefault().Number, 
+                                    new SelectList(item.InstructorPhones, "Number", "Number", 
+                                                    item.InstructorPhones.FirstOrDefault().Number))*@
+                </td>
+                @* Hide courses here because it's obligatory to add course once the insturctor added *@
+                @*<td>
+                    @Html.DropDownListFor(a => item.InstructorCourses.FirstOrDefault().Course.Name,
+                                    new SelectList(item.InstructorCourses.Select(a=>a.Course.Name)
+                                    ,"","",item.InstructorCourses.FirstOrDefault().Course.Name))
+                </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-primary btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

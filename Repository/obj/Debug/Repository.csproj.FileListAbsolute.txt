@@ -1,0 +1,11 @@
+E:\.Net Task\My.Task\Repository\bin\Debug\Repository.exe.config
+E:\.Net Task\My.Task\Repository\bin\Debug\Repository.exe
+E:\.Net Task\My.Task\Repository\bin\Debug\Repository.pdb
+E:\.Net Task\My.Task\Repository\bin\Debug\EntityFramework.dll
+E:\.Net Task\My.Task\Repository\bin\Debug\EntityFramework.SqlServer.dll
+E:\.Net Task\My.Task\Repository\bin\Debug\EntityFramework.xml
+E:\.Net Task\My.Task\Repository\bin\Debug\EntityFramework.SqlServer.xml
+E:\.Net Task\My.Task\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+E:\.Net Task\My.Task\Repository\obj\Debug\Repository.exe
+E:\.Net Task\My.Task\Repository\obj\Debug\Repository.pdb
+E:\.Net Task\My.Task\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache

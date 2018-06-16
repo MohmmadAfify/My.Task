@@ -1,0 +1,65 @@
+﻿@model Course
+
+@{
+    ViewBag.Title = "Delete Course";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this course?</h3>
+<div>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Code)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Code)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Name)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">
+                @Html.LabelFor(model => model.Hours)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(model => model.Hours)
+            </td>
+        </tr>
+
+    </table>
+
+        @using (Html.BeginForm())
+        {
+            if (Model.HasInstructor == false)
+            {
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> |
+                    @Html.ActionLink("Back to List", "Index","Index", new { @class= "btn btn-default btn-sm" })
+                </div>
+            }
+            else
+            {
+                <div class="alert">
+                    <p>
+                        The Course has an Instructor, it can't be Deleted
+                    </p>
+                    <p>
+                        To view the Course Details
+                        @Html.ActionLink("View", "Details", new { id = Model.Id }, new { @class = "btn btn-primary btn-sm" })
+                    </p>
+                </div>
+                <div>
+                    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" })
+                </div>
+            }
+        }
+</div>
