@@ -30,7 +30,7 @@ namespace Repository
         public bool Delete(int id)
         {
             var entity = set.Find(id);
-            set.Remove(entity);
+            context.Entry(entity).State = EntityState.Modified;
             return context.SaveChanges() > 0;
         }
 
