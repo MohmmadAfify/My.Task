@@ -36,7 +36,8 @@
                 </p>
                 @Html.DropDownListFor(i=>i.Instructor.Id,
                                     new SelectList(Model.Instructors.ToList(),
-                                    "Value", "Text")
+                                    "Value", "Text"),
+                                    "-- Select Instructor--"
                                     , htmlAttributes: new { @class = "form-control" })
                 @* try to send instructor name also *@
                 @Html.HiddenFor(i => i.InstructorCourse.Fk_CourseID)

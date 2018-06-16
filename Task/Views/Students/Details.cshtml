@@ -54,6 +54,7 @@
                     @Html.DropDownListFor(model => model.StudentCourses.FirstOrDefault().Course,
                             new SelectList(Model.StudentCourses.Select(a=>a.Course) ,"Id","Name",
                                             Model.StudentCourses.FirstOrDefault().Course.Name),
+                                            "-- Courses --",
                                             new { @class = "dropdown col-md-5 btn btn-default" })
                 </td>
             @:</tr>
