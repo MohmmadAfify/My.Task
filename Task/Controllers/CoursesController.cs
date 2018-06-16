@@ -14,7 +14,7 @@ namespace Task.Controllers
 {
     public class CoursesController : Controller
     {
-        UnitOfWork Unit = new UnitOfWork();
+        UnitOfWork unit = new UnitOfWork();
         private TaskModel ctx = new TaskModel();
 
         public ActionResult Index()
@@ -45,28 +45,24 @@ namespace Task.Controllers
             //    });
             //}
             #endregion
-            var courses = Unit.CourseManager.GetAllBind();
+            var courses = unit.CourseManager.GetAllBind();
             return View(courses);
         }
 
         public ActionResult Details(int id)
         {
             #region Logic Here
-            /*
-             *Dispaly the course with drop downlist of instructors
-             */
+                /*
+                        *Dispaly the course with drop downlist of its instructors
+                        */
             #endregion
 
-            var course = Unit.CourseManager.GetById(id);
-            //var instructors = Unit.InstructorManager.GetById(id);
+            var course = unit.CourseManager.GetById(id);
 
+            // get the instructors who teach this course
             var instructorId = course.InstructorCourses.Where(a => a.Fk_CourseID == id).
                                 Select(a => a.Fk_InstructorId).ToList();
-
             var instructors = ctx.Instructors.Where(a => instructorId.Contains(a.Id));
-            //var instructor = ctx.Instructors.Select(a=>a).Contains( Id==instructorId)
-                    //Find(instructorId);
-                    // Unit.InstructorManager.GetById(test);
 
             CourseInstructorVM courseVM = new CourseInstructorVM
             {
@@ -74,6 +70,7 @@ namespace Task.Controllers
                 CourseName = course.Name,
                 Code = course.Code,
                 Hours = course.Hours ?? 20,
+                HasInstructor = course.HasInstructor,
                 Instructors = new SelectList(items: instructors,
                                                 dataValueField: "Name",
                                                 dataTextField: "Name", 
@@ -108,7 +105,7 @@ namespace Task.Controllers
                 //ctx.SaveChanges();
                 #endregion
                 // solve the damn problem
-                Unit.CourseManager.Add(course);
+                unit.CourseManager.Add(course);
                 return RedirectToAction("Index");
             }
 
@@ -117,7 +114,7 @@ namespace Task.Controllers
 
         public ActionResult Edit(int id)
         {
-            Course course = Unit.CourseManager.GetById(id);
+            Course course = unit.CourseManager.GetById(id);
                 //ctx.Courses.FirstOrDefault(a => a.Id == id);
             return View(course);
         }
@@ -128,12 +125,12 @@ namespace Task.Controllers
             if (ModelState.IsValid)
             {
                 Course old = ctx.Courses.FirstOrDefault(a => a.Id == course.Id);
-                // Unit.CourseManager.GetById(course.Id);
-                course.HasInstructor = old.HasInstructor;
+                // Unit.CourseManager.GetById(course.Id); ** Conflict with dbset.Attach
+                old.HasInstructor = course.HasInstructor;
                 old.Name = course.Name;
                 old.Hours = course.Hours;
                 old.Code = course.Code;
-                Unit.CourseManager.Edit(course);
+                unit.CourseManager.Edit(course);
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -141,23 +138,24 @@ namespace Task.Controllers
 
         public ActionResult Delete(int id)
         {
-            Course course = Unit.CourseManager.GetById(id);
+            Course course = unit.CourseManager.GetById(id);
             return View(course);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = Unit.CourseManager.GetById(id);
-            Unit.CourseManager.Delete(id);
+            Course course = unit.CourseManager.GetById(id);
+            course.IsDeleted = true;
+            unit.CourseManager.Delete(id);
             return RedirectToAction("Index");
         }
 
         [ActionName("Assign")]
         public ActionResult AssignCourseToInstructor(int id)
         {
-            Course course = Unit.CourseManager.GetById(id);
-            List<Instructor> instructors = Unit.InstructorManager.GetAllBind();
+            Course course = unit.CourseManager.GetById(id);
+            List<Instructor> instructors = unit.InstructorManager.GetAllBind();
 
             CourseInstructorVM courseVM = new CourseInstructorVM
             {

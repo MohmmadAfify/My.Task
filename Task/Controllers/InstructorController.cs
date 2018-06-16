@@ -72,6 +72,7 @@ namespace Task.Controllers
         [HttpPost]
         public ActionResult Delete(Instructor instructor)
         {
+            instructor.IsDeleted = true;
             Unit.InstructorManager.Delete(instructor.Id);
             return RedirectToAction("Index");
         }
