@@ -48,7 +48,7 @@ namespace Task.Controllers
                 CourseId = course.Id,
                 CourseName = course.Name,
                 CourseCode = course.Code,
-                CourseHours = course.Hours ?? 20,
+                CourseHours = course.Hours,
                 CourseHasInstructor = course.HasInstructor,
                 Instructors = new SelectList(items: instructors,
                                                 dataValueField: "Name",

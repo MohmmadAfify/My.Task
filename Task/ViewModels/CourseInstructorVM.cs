@@ -14,7 +14,7 @@ namespace Task.ViewModels
         public int CourseId { get; set; }
         public int CourseCode { get; set; }
         public string CourseName { get; set; }
-        public int CourseHours { get; set; }
+        public int? CourseHours { get; set; }
         public string InstructorName { get; set; }
         public bool CourseHasInstructor { get; set; }
         public bool CourseIsDeleted { get; set; }

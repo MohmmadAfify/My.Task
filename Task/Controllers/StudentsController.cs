@@ -45,6 +45,9 @@ namespace Task.Controllers
                 Courses = new List<Course>(),
                 StudentName = student.Name,
                 StudentId = student.Id,
+                BirthDate = student.BirthDate,
+                StudentMail = student.Mail,
+                StudentPhone = student.Phone ?? 1234
             };
             TempData["studentId"] = id;
             studentCourseVM.Courses = courses;
