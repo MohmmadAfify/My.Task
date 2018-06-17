@@ -131,6 +131,7 @@ namespace Task.Controllers
         {
             Student student = unit.StudentManager.GetById(id);
             List<Course> courses = unit.CourseManager.GetAllBind();
+            courses = courses.Where(c => c.IsDeleted == false).ToList();
             List<Instructor> instructors = unit.InstructorManager.GetAllBind();
 
             StudentCourseVM studentCourseVM = new StudentCourseVM
