@@ -47,7 +47,7 @@ namespace Task.Controllers
                 StudentId = student.Id,
                 BirthDate = student.BirthDate,
                 StudentMail = student.Mail,
-                StudentPhone = student.Phone ?? 1234
+                StudentPhone = student.Phone
             };
             TempData["studentId"] = id;
             studentCourseVM.Courses = courses;

@@ -20,6 +20,31 @@ namespace Task.Controllers
             return View(instructors);
         }
 
+        public ActionResult Details(int id)
+        {
+            var instructor = unit.InstructorManager.GetById(id);
+
+            // get the instructors who teach this course
+            var courseId = instructor.InstructorCourses.Where(a => a.Fk_InstructorId == id).
+                                Select(a => a.Fk_CourseID).ToList();
+            var courses = ctx.Courses.Where(a => courseId.Contains(a.Id));
+
+            CourseInstructorVM courseVM = new CourseInstructorVM
+            {
+                InstructorId = instructor.Id,
+                InstructorName = instructor.Name,
+                InstructorDept = instructor.Department,
+                InstructorMail = instructor.Mail,
+                InstructorPhone = instructor.Phone,
+                Courses = new SelectList(items: courses,
+                                                dataValueField: "Name",
+                                                dataTextField: "Name",
+                                                selectedValue: courses)
+            };
+
+            return View(courseVM);
+        }
+
         public ActionResult Create()
         {
             return View();

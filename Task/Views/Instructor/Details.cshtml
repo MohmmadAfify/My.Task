@@ -1,0 +1,82 @@
+﻿@model CourseInstructorVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Instructor</h4>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <td class="col-md-2">
+                @Html.DisplayNameFor(model => model.InstructorName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.InstructorName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.InstructorMail)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.InstructorMail)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.InstructorDept)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.InstructorDept)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.InstructorPhone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.InstructorPhone)
+            </td>
+        </tr>
+        @if (true)
+        {
+            @:<tr>
+                <td class="col-md-2">
+                    @Html.LabelFor(model => model.Courses)
+                </td>
+                <td class="col-md-3">
+                    @Html.DropDownListFor(a => a.Courses,
+                                         new SelectList(Model.Courses, "Value", "Text",
+                                         Model.CourseName),
+                                         "-- Courses --",
+                                         new { @class = "dropdown col-md-5 btn btn-default" })
+                </td>
+                @:</tr>
+
+
+        }
+        else
+        {
+            @:<tr>
+                <td class="col-md-2">
+                    @Html.LabelFor(model => model.Courses)
+                </td>
+                <td class="col-md-3">
+                    No Courses yet...
+                </td>
+                    @:</tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InstructorId }, new { @class = "btn btn-primary btn-sm" })
+</p>
