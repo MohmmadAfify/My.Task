@@ -46,7 +46,9 @@
                 @Html.DisplayFor(model => model.InstructorPhone)
             </td>
         </tr>
-        @if (true)
+
+        @{ var x = Model.Courses.Count(); }
+        @if ( x >= 1)
         {
             @:<tr>
                 <td class="col-md-2">

@@ -24,7 +24,7 @@ namespace Task.Controllers
         {
             var instructor = unit.InstructorManager.GetById(id);
 
-            // get the instructors who teach this course
+            // get the course who is teached this instructor
             var courseId = instructor.InstructorCourses.Where(a => a.Fk_InstructorId == id).
                                 Select(a => a.Fk_CourseID).ToList();
             var courses = ctx.Courses.Where(a => courseId.Contains(a.Id));
