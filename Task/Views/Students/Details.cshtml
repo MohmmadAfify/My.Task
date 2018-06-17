@@ -1,8 +1,37 @@
-﻿@model Student
+﻿@model StudentCourseVM
 
 @{
     ViewBag.Title = "Details";
 }
+
+<script language="javascript" type="text/javascript">
+    function GetInstructor(_courseId) {
+        var html = "<option value='0'> Please wait...</option>";
+        $("#instructorId").html(html).show();
+        var url = '@Url.Action("Detail", "Students")';
+        $.ajax({
+            url: url,
+            data: {
+                courseId: _courseId,
+            },
+            cache: false,
+            dataType: 'json',
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>-- Select Instructor --</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#instructorId").html(markup).show();
+
+            },
+            error: function (response) {
+                alert("error : " + response);
+            }
+        });
+
+    }
+</script>
 
 <h2>Details</h2>
 
@@ -13,18 +42,18 @@
     <table class="table table-striped">
         <tr>
             <td class="col-md-2">
-                @Html.LabelFor(model => model.Name)
+                @Html.LabelFor(model => model.StudentName)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => model.StudentName)
             </td>
         </tr>
         <tr>
             <td class="col-md-2">
-                @Html.LabelFor(model => model.Mail)
+                @Html.LabelFor(model => model.StudentMail)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(model => model.Mail)
+                @Html.DisplayFor(model => model.StudentMail)
             </td>
         </tr>
         <tr>
@@ -37,25 +66,46 @@
         </tr>
         <tr>
             <td class="col-md-2">
-                @Html.LabelFor(model => model.Phone)
+                @Html.LabelFor(model => model.StudentPhone)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(model => model.Phone)
+                @Html.DisplayFor(model => model.StudentPhone)
             </td>
         </tr>
-           @{var courses = Model.StudentCourses.Select(a => a.Course).FirstOrDefault(); }
+           @{var course = Model.Courses.Select(a => a).FirstOrDefault(); }
         
-            @if (courses != null){
+            @if (course != null){
             @:<tr>
                 <td class="col-md-2">
-                    @Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)
+                    @*@Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)*@
+                    <label class="col-md-2">Courses</label>
                 </td>
                 <td class="col-md-3">
-                    @Html.DropDownListFor(model => model.StudentCourses.FirstOrDefault().Course,
+                    @*@Html.DropDownListFor(model => model.StudentCourses.FirstOrDefault().Course,
                             new SelectList(Model.StudentCourses.Select(a=>a.Course) ,"Id","Name",
                                             Model.StudentCourses.FirstOrDefault().Course.Name),
                                             "-- Courses --",
-                                            new { @class = "dropdown col-md-5 btn btn-default" })
+                                            new { @class = "dropdown col-md-5 btn btn-default" })*@
+                    @Html.DropDownListFor(m => m.Courses,
+                                new SelectList(Model.Courses, "Id", "Name"),
+                                 "--Select Course--",
+                                new
+                                {
+                                    @style = "width:200px;",
+                                    @onchange = "javascript:GetInstructor(this.value);",
+                                    @class = "dropdown col-md-5 btn btn-default"
+                                })
+                    <br />
+                    <br />
+                 </td>
+            @:</tr>
+            @:<tr>
+                <td class="col-md-3">
+                    <label class="col-md-2">Instructors</label>
+                </td>
+                <td>
+                    <select id="instructorId" name="instructorId" style="width: 200px"
+                            class="dropdown col-md-5 btn btn-default"></select>
                 </td>
             @:</tr>
             }
@@ -63,7 +113,7 @@
             {
                 @:<tr>
                     <td class="col-md-2">
-                        @Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)
+                        <label class="col-md-2"> Courses</label>
                     </td>
                     <td>
                         No Courses yet..
@@ -75,5 +125,5 @@
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index", "Index", new { @class = "btn btn-default btn-sm" }) |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id } , new { @class="btn btn-primary btn-sm" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId } , new { @class="btn btn-primary btn-sm" })
 </p>

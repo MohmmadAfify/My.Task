@@ -26,8 +26,51 @@ namespace Task.Controllers
 
         public ActionResult Details(int id)
         {
+            #region Past Code
+            //Student student = unit.StudentManager.GetById(id);
+            //return View(student);
+            #endregion
+
             Student student = unit.StudentManager.GetById(id);
-            return View(student);
+
+            List<Course> courses = unit.CourseManager.GetAllBind();
+            List<Instructor> instructors = unit.InstructorManager.GetAllBind();
+
+            var courseId = student.StudentCourses.Where(a => a.Fk_StudentId == id).
+                                Select(a => a.Fk_CourseId).ToList();
+            courses = ctx.Courses.Where(a => courseId.Contains(a.Id)).ToList();
+
+            StudentCourseVM studentCourseVM = new StudentCourseVM
+            {
+                Courses = new List<Course>(),
+                StudentName = student.Name,
+                StudentId = student.Id,
+            };
+            TempData["studentId"] = id;
+            studentCourseVM.Courses = courses;
+            return View(studentCourseVM);
+        }
+
+        [HttpPost, ActionName("Detail")]
+        public ActionResult FullDetail(int courseId)
+        {
+            int studentId = Convert.ToInt32(TempData.Peek("studentId"));
+            Student student = unit.StudentManager.GetById(studentId);
+
+            List<Instructor> instructors = unit.InstructorManager.GetAllBind();
+            //instructors = ctx.InstructorCourses.Where(a => a.Fk_CourseID == courseId).Select(i => i.Instructor).ToList();
+            //var studentInstructors = instructors.Where(s => )
+
+            var instructorId = student.InstructorStudents.Where(a => a.Fk_StudentId == studentId).
+                                Where(c => c.Instructor.InstructorCourses.FirstOrDefault().Fk_CourseID == courseId).
+                                Select(a => a.Fk_InstructorId).ToList();
+            instructors = ctx.Instructors.Where(a => instructorId.Contains(a.Id)).ToList();
+            // get all student instructors
+            // want to get the instructor who teach the speciefic course 
+            var x = ctx.Instructors.Select(a => a).Where(a => a.InstructorCourses.FirstOrDefault().Fk_CourseID == courseId);
+
+            SelectList instructorsList = new SelectList(instructors, "Id", "Name", "");
+            return Json(instructorsList);
         }
 
         public ActionResult Create()
