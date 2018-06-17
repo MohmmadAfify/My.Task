@@ -59,8 +59,8 @@ namespace Task.Controllers
 
             List<Instructor> instructors = unit.InstructorManager.GetAllBind();
 
-            // want to get the instructor who teach the speciefic course 
-            //  FOR SOME REASON IT DIDN'T FITCH ALL INSR=TRUCTOR EVERY TIME
+            // Want to get the instructor who teach the speciefic course 
+            //  FOR SOME REASON IT DIDN'T FITCH ALL INSTRUCTORS EVERY TIME
             var instructorId = student.InstructorStudents.Where(a => a.Fk_StudentId == studentId).
                                 Where(c => c.Instructor.InstructorCourses.FirstOrDefault().Fk_CourseID == courseId).
                                 Select(a => a.Fk_InstructorId).ToList();
