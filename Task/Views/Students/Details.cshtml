@@ -77,15 +77,9 @@
             @if (course != null){
             @:<tr>
                 <td class="col-md-2">
-                    @*@Html.LabelFor(model => model.StudentCourses.FirstOrDefault().Course)*@
                     <label class="col-md-2">Courses</label>
                 </td>
                 <td class="col-md-3">
-                    @*@Html.DropDownListFor(model => model.StudentCourses.FirstOrDefault().Course,
-                            new SelectList(Model.StudentCourses.Select(a=>a.Course) ,"Id","Name",
-                                            Model.StudentCourses.FirstOrDefault().Course.Name),
-                                            "-- Courses --",
-                                            new { @class = "dropdown col-md-5 btn btn-default" })*@
                     @Html.DropDownListFor(m => m.Courses,
                                 new SelectList(Model.Courses, "Id", "Name"),
                                  "--Select Course--",

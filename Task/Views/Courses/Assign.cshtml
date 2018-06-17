@@ -33,7 +33,7 @@
                                     "Value", "Text"),
                                     "-- Select Instructor--"
                                     , htmlAttributes: new { @class = "form-control col-md-6" })
-                @* try to send instructor name also *@
+
                 @Html.HiddenFor(i => i.InstructorCourse.Fk_CourseID)
                 @Html.HiddenFor(i => i.InstructorCourse.Fk_InstructorId)
                 @Html.HiddenFor(i => i.CourseId)

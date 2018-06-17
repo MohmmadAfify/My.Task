@@ -58,16 +58,13 @@ namespace Task.Controllers
             Student student = unit.StudentManager.GetById(studentId);
 
             List<Instructor> instructors = unit.InstructorManager.GetAllBind();
-            //instructors = ctx.InstructorCourses.Where(a => a.Fk_CourseID == courseId).Select(i => i.Instructor).ToList();
-            //var studentInstructors = instructors.Where(s => )
 
+            // want to get the instructor who teach the speciefic course 
+            //  FOR SOME REASON IT DIDN'T FITCH ALL INSR=TRUCTOR EVERY TIME
             var instructorId = student.InstructorStudents.Where(a => a.Fk_StudentId == studentId).
                                 Where(c => c.Instructor.InstructorCourses.FirstOrDefault().Fk_CourseID == courseId).
                                 Select(a => a.Fk_InstructorId).ToList();
             instructors = ctx.Instructors.Where(a => instructorId.Contains(a.Id)).ToList();
-            // get all student instructors
-            // want to get the instructor who teach the speciefic course 
-            var x = ctx.Instructors.Select(a => a).Where(a => a.InstructorCourses.FirstOrDefault().Fk_CourseID == courseId);
 
             SelectList instructorsList = new SelectList(instructors, "Id", "Name", "");
             return Json(instructorsList);
